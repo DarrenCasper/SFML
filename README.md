@@ -1,0 +1,12 @@
+# Project Report
+
+Project ini Dibuat bedasarkan konsep 2d platformer dengan mekanik berpindah realm:
+<hr>
+
+## First Commit:
+Apa yang ditambahkan:
+1. Semacam Tester untuk platform, player dengan ground serta logika untuk 2d platformer
+2. Setiap bagian code sudah ditaruh dan dijelaskan (bisa dilihat dari comment yang ada dari kode cpp)
+3. Belum diimplementasikan GameState karena ini masih tester untuk platformer
+4. Menggunakan Vector untuk menyimpan platform biar bisa banyak initiasi platform
+5. Menggunakan logic collision serta set boundaries untuk Teleport player ke ujung map jika sudah menyampai ujung mapnya.
