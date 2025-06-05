@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include "player.hpp"
 
 const float ASPECT_RATIO = 16.f / 9.f;
 
@@ -28,20 +29,14 @@ void updateView(sf::RenderWindow &window, sf::View &view)
     view.setViewport(sf::FloatRect(viewportX, viewportY, viewWidth, viewHeight));
 }
 
-int main()
-{
-    sf::RenderWindow window(sf::VideoMode(1600, 900), "Platformer");
+int main() {
+    sf::RenderWindow window(sf::VideoMode(1600, 900), "Echo's Realm");
     window.setFramerateLimit(60);
 
-    sf::View view(sf::FloatRect(0.f, 0.f, 1600.f, 900.f));
-    updateView(window, view);
+    Player player;
+    const float gravity = 0.5f;
 
-    // Initialize player
-    sf::RectangleShape player(sf::Vector2f(50.f, 50.f));
-    player.setFillColor(sf::Color::Green);
-    player.setPosition(50.f, 400.f);
-
-    // Initialize platforms
+    // Create platforms
     std::vector<sf::RectangleShape> platforms;
 
     sf::RectangleShape platform1(sf::Vector2f(200.f, 20.f));
@@ -54,77 +49,26 @@ int main()
     platform2.setPosition(720.f, 620.f);
     platforms.push_back(platform2);
 
-    sf::RectangleShape ground(sf::Vector2f(2000.f, 50.f));
+    sf::RectangleShape ground(sf::Vector2f(3000.f, 50.f));
     ground.setFillColor(sf::Color::Yellow);
     ground.setPosition(0.f, 850.f);
     platforms.push_back(ground);
 
-    // Physics variables
-    sf::Vector2f velocity(0.f, 0.f);
-    float worldWidth = 1600.f;
-    float gravity = 0.5f;
-    float jumpSpeed = -12.f;
-    bool isJumping = false;
-
-    while (window.isOpen())
-    {
-        // --- Event Handling ---
+    while (window.isOpen()) {
         sf::Event event;
-        while (window.pollEvent(event))
-        {
+        while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed)
                 window.close();
-
-            if (event.type == sf::Event::Resized)
-                updateView(window, view);
         }
 
-        // --- Input ---
-        sf::Vector2f pos = player.getPosition();
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-            window.close();
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-            player.move(-5.f, 0.f);
-        if (pos.x > worldWidth)
-            player.setPosition(0.f - player.getSize().x, pos.y);
-        else if (pos.x + player.getSize().x < 0.f)
-            player.setPosition(worldWidth, pos.y);
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-            player.move(5.f, 0.f);
-        if (pos.x > worldWidth)
-            player.setPosition(0.f - player.getSize().x, pos.y);
-        else if (pos.x + player.getSize().x < 0.f)
-            player.setPosition(worldWidth, pos.y);
-        if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))) && !isJumping)
-        {
-            velocity.y = jumpSpeed;
-            isJumping = true;
-        }
+        player.handleInput();
+        player.applyPhysics(gravity);
+        player.checkCollision(platforms); // ← Pass platforms here
 
-        // --- Physics ---
-        velocity.y += gravity;
-        player.move(0, velocity.y);
-
-        // --- Collision with all platforms ---
-        for (auto &plat : platforms)
-        {
-            if (player.getGlobalBounds().intersects(plat.getGlobalBounds()))
-            {
-                if (velocity.y > 0) // Only correct while falling
-                {
-                    player.setPosition(player.getPosition().x, plat.getPosition().y - player.getSize().y);
-                    velocity.y = 0;
-                    isJumping = false;
-                }
-            }
-        }
-
-        // --- Drawing ---
         window.clear(sf::Color::Black);
-        window.setView(view);
+        player.draw(window);
 
-        window.draw(player);
-        for (auto &plat : platforms)
+        for (auto& plat : platforms)
             window.draw(plat);
 
         window.display();
