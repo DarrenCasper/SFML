@@ -10,3 +10,9 @@ Apa yang ditambahkan:
 3. Belum diimplementasikan GameState karena ini masih tester untuk platformer
 4. Menggunakan Vector untuk menyimpan platform biar bisa banyak initiasi platform
 5. Menggunakan logic collision serta set boundaries untuk Teleport player ke ujung map jika sudah menyampai ujung mapnya.
+
+## Second Commit:
+Apa yang ditambahkan:
+1. Membuat Dissapearring platform yang akan muncul dan tidak muncul dalam spesific waktu (menggunakan fungsi clock dari SFML).
+2. Membuat logic untuk class Platform.hpp dan DisappearPlatform.hpp dan bisa memakai vector untuk menyimpan jenis platform yang berbeda tersebut.
+3. Mengubah logic collision agar memperhatikan yang mana platform yang active

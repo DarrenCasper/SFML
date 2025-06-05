@@ -25,11 +25,11 @@ void Player::applyPhysics(float gravity) {
     shape.move(0.f, velocity.y);
 }
 
-void Player::checkCollision(const std::vector<sf::RectangleShape>& platforms) {
+void Player::checkCollision(const std::vector<Platform*>& platforms) {
     for (const auto& plat : platforms) {
-        if (shape.getGlobalBounds().intersects(plat.getGlobalBounds())) {
+        if (shape.getGlobalBounds().intersects(plat->getBounds()) && plat->isActive()) {
             if (velocity.y > 0) { // falling
-                shape.setPosition(shape.getPosition().x, plat.getPosition().y - shape.getSize().y);
+                shape.setPosition(shape.getPosition().x, plat->getPosition().y - shape.getSize().y);
                 velocity.y = 0;
                 isJumping = false;
             }
