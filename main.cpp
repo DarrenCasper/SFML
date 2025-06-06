@@ -3,6 +3,8 @@
 #include "player.hpp"
 #include "platform.hpp"
 #include "DisappearPlatform.hpp"
+#include "Realm.hpp"
+#include "RealmPlatform.hpp"
 
 const float ASPECT_RATIO = 16.f / 9.f;
 
@@ -38,10 +40,14 @@ int main()
     window.setFramerateLimit(60);
 
     Player player;
+    bool rKeyPrev = false;
     const float gravity = 0.5f;
 
     // Create platforms
     std::vector<Platform *> platforms;
+
+    // Realm platforms
+    Realm currentRealm = Realm::Light;
 
     sf::RectangleShape platform1(sf::Vector2f(200.f, 20.f));
     platform1.setFillColor(sf::Color::Blue);
@@ -58,6 +64,14 @@ int main()
     ground.setPosition(0.f, 850.f);
     platforms.push_back(new Platform(ground.getSize(), ground.getPosition(), ground.getFillColor()));
 
+    sf::RectangleShape realmPlat(sf::Vector2f(200.f, 20.f));
+    realmPlat.setPosition(1000.f, 500.f);
+    platforms.push_back(new RealmPlatform(realmPlat.getSize(), realmPlat.getPosition(), Realm::Light));
+
+    sf::RectangleShape realmPlat1(sf::Vector2f(200.f, 20.f));
+    realmPlat1.setPosition(1300.f, 500.f);
+    platforms.push_back(new RealmPlatform(realmPlat1.getSize(), realmPlat1.getPosition(), Realm::Dark));
+
     while (window.isOpen())
     {
         float deltaTime = clock.restart().asSeconds();
@@ -70,19 +84,51 @@ int main()
         }
 
         player.handleInput();
+        bool rKeyNow = sf::Keyboard::isKeyPressed(sf::Keyboard::R);
+        if (rKeyNow && !rKeyPrev)
+        {
+            currentRealm = (currentRealm == Realm::Light) ? Realm::Dark : Realm::Light;
+        }
+        rKeyPrev = rKeyNow;
         player.applyPhysics(gravity);
         player.checkCollision(platforms);
 
+        sf::Vector2f pos = player.getPosition();
+        float playerWidth = player.getBounds().width;
+
+        if (pos.x + playerWidth < 0)
+        {
+            // Left edge → teleport to right
+            player.setPosition(1600, pos.y);
+        }
+        else if (pos.x > 1600)
+        {
+            // Right edge → teleport to left
+            player.setPosition(-playerWidth, pos.y);
+        }
         // Update all platforms
         for (auto &plat : platforms)
             plat->update(deltaTime);
+        for (auto &plat : platforms)
+            plat->setRealm(currentRealm);
 
-        window.clear(sf::Color::Black);
+        sf::Color bgColor = (currentRealm == Realm::Light) ? sf::Color(200, 220, 255) : sf::Color(30, 30, 50);
+        window.clear(bgColor);
         player.draw(window);
 
         for (auto &plat : platforms)
+
             if (plat->isActive())
                 plat->draw(window);
+            else
+            {
+                RealmPlatform *realmPlat = dynamic_cast<RealmPlatform *>(plat);
+                if (realmPlat)
+                {
+                    plat->drawGhost(window);
+                }
+            }
+
         window.display();
     }
 

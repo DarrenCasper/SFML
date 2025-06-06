@@ -10,11 +10,11 @@ Player::Player() {
 }
 
 void Player::handleInput() {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
         shape.move(-5.f, 0.f);
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
         shape.move(5.f, 0.f);
-    if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) && !isJumping) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && !isJumping) {
         velocity.y = jumpSpeed;
         isJumping = true;
     }
