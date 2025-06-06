@@ -98,12 +98,10 @@ int main()
 
         if (pos.x + playerWidth < 0)
         {
-            // Left edge → teleport to right
             player.setPosition(1600, pos.y);
         }
         else if (pos.x > 1600)
         {
-            // Right edge → teleport to left
             player.setPosition(-playerWidth, pos.y);
         }
         // Update all platforms

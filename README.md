@@ -16,3 +16,10 @@ Apa yang ditambahkan:
 1. Membuat Dissapearring platform yang akan muncul dan tidak muncul dalam spesific waktu (menggunakan fungsi clock dari SFML).
 2. Membuat logic untuk class Platform.hpp dan DisappearPlatform.hpp dan bisa memakai vector untuk menyimpan jenis platform yang berbeda tersebut.
 3. Mengubah logic collision agar memperhatikan yang mana platform yang active
+
+## Third Commit:
+Apa yang ditambahkan:
+1. Membuat Realm.hpp dengan Enum class (memakai key = value) di sini Dark dan Light;
+2. Membuat RealmPlatform hpp dan Cpp dengan logic mereka.
+3. Membenarkan Fungsi di Main untuk menghandle Realm, serta BG diubah bedasarkan Realm player berada. 
+4. Tadi out of bounds sempet hilang tapi udah di restore lagi.
