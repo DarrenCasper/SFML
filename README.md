@@ -23,3 +23,10 @@ Apa yang ditambahkan:
 2. Membuat RealmPlatform hpp dan Cpp dengan logic mereka.
 3. Membenarkan Fungsi di Main untuk menghandle Realm, serta BG diubah bedasarkan Realm player berada. 
 4. Tadi out of bounds sempet hilang tapi udah di restore lagi.
+
+## Fourth Commit:
+apa yang ditambahkan:
+1. Membuat class Object yang bisa menyimpan banyak objek (jadi nanti bisa buat turunan dari object).
+2. Membuat cloud yang bergerak dari kiri ke kanan dan di wrap balik (inheritance dari object)
+3. Mungkin nanti menambahkan dekorasi map agar map lebih enak dilihatnya.
+4. Menggunakan Vector lagi untuk setor antara object atau class dari Cloud.s

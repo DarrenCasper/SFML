@@ -5,6 +5,10 @@
 #include "DisappearPlatform.hpp"
 #include "Realm.hpp"
 #include "RealmPlatform.hpp"
+#include "Object.hpp"
+#include "Cloud.hpp"
+#include <memory>
+#include <list>
 
 const float ASPECT_RATIO = 16.f / 9.f;
 
@@ -43,6 +47,61 @@ int main()
     bool rKeyPrev = false;
     const float gravity = 0.5f;
 
+    // Background
+    sf::Texture backgroundTexture1;
+    if (!backgroundTexture1.loadFromFile("img/game_background_1/layers/rocks_2.png"))
+    {
+        return -1;
+    }
+    sf::Sprite backgroundSprite1;
+    backgroundSprite1.setTexture(backgroundTexture1);
+
+    backgroundSprite1.setScale(
+        static_cast<float>(window.getSize().x) / backgroundTexture1.getSize().x,
+        static_cast<float>(window.getSize().y) / backgroundTexture1.getSize().y);
+
+    sf::Texture backgroundTexture2;
+    if (!backgroundTexture2.loadFromFile("img/game_background_1/layers/sky.png"))
+    {
+        return -1;
+    }
+    sf::Sprite backgroundSprite2;
+    backgroundSprite2.setTexture(backgroundTexture2);
+
+    backgroundSprite2.setScale(
+        static_cast<float>(window.getSize().x) / backgroundTexture2.getSize().x,
+        static_cast<float>(window.getSize().y) / backgroundTexture2.getSize().y);
+
+    sf::Texture backgroundTexture3;
+    if (!backgroundTexture3.loadFromFile("img/game_background_3/layers/ground_3.png"))
+    {
+        return -1;
+    }
+    sf::Sprite backgroundSprite3;
+    backgroundSprite3.setTexture(backgroundTexture3);
+
+    backgroundSprite3.setScale(
+        static_cast<float>(window.getSize().x) / backgroundTexture3.getSize().x,
+        static_cast<float>(window.getSize().y) / backgroundTexture3.getSize().y);
+
+    sf::Texture backgroundTexture4;
+    if (!backgroundTexture4.loadFromFile("img/game_background_3/layers/sky.png"))
+    {
+        return -1;
+    }
+    sf::Sprite backgroundSprite4;
+    backgroundSprite4.setTexture(backgroundTexture4);
+
+    backgroundSprite4.setScale(
+        static_cast<float>(window.getSize().x) / backgroundTexture4.getSize().x,
+        static_cast<float>(window.getSize().y) / backgroundTexture4.getSize().y);
+
+    // Set up for Clouds
+    std::list<std::unique_ptr<Object>> decorations;
+    decorations.emplace_back(std::make_unique<Cloud>("img/game_background_1/layers/clouds_2.png", sf::Vector2f(0, -250), 175.f));
+    decorations.emplace_back(std::make_unique<Cloud>("img/game_background_1/layers/clouds_3.png", sf::Vector2f(500, -200), 200.f));
+    decorations.emplace_back(std::make_unique<Cloud>("img/game_background_1/layers/clouds_2.png", sf::Vector2f(250, -250), 125.f));
+    decorations.emplace_back(std::make_unique<Cloud>("img/game_background_1/layers/clouds_1.png", sf::Vector2f(750, -250), 150.f));
     // Create platforms
     std::vector<Platform *> platforms;
 
@@ -109,9 +168,18 @@ int main()
             plat->update(deltaTime);
         for (auto &plat : platforms)
             plat->setRealm(currentRealm);
+        for (auto &decoration : decorations)
+            decoration->update(deltaTime); 
 
-        sf::Color bgColor = (currentRealm == Realm::Light) ? sf::Color(200, 220, 255) : sf::Color(30, 30, 50);
-        window.clear(bgColor);
+
+        // sf::Color bgColor = (currentRealm == Realm::Light) ? sf::Color(200, 220, 255) : sf::Color(30, 30, 50);
+        window.clear();
+        window.draw(currentRealm == Realm::Light ? backgroundSprite2 : backgroundSprite4);
+        window.draw(currentRealm == Realm::Light ? backgroundSprite1 : backgroundSprite3);
+
+        for (auto &decoration : decorations)
+            decoration->draw(window);
+
         player.draw(window);
 
         for (auto &plat : platforms)
