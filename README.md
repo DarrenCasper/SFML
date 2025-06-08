@@ -30,3 +30,9 @@ apa yang ditambahkan:
 2. Membuat cloud yang bergerak dari kiri ke kanan dan di wrap balik (inheritance dari object)
 3. Mungkin nanti menambahkan dekorasi map agar map lebih enak dilihatnya.
 4. Menggunakan Vector lagi untuk setor antara object atau class dari Cloud.s
+
+## Fifth Commit:
+Apa yang ditambahkan:
+1. Membuat Sprite buat player
+2. Rencana mau kasih sprite buat objek tapi cukup susah karena image yang dipake di stretch semua sehingga mungkin tetap menggunakan platform berwarna rectangle
+3. Logic player sudah diupdate tetapi tidak menggunakan banyak animasi hanya animasi bergerak dan arah yang dihadap ketika dipencet A dan D.

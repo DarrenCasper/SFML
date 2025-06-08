@@ -143,13 +143,13 @@ int main()
         }
 
         player.handleInput();
+        player.update(deltaTime);
         bool rKeyNow = sf::Keyboard::isKeyPressed(sf::Keyboard::R);
         if (rKeyNow && !rKeyPrev)
         {
             currentRealm = (currentRealm == Realm::Light) ? Realm::Dark : Realm::Light;
         }
         rKeyPrev = rKeyNow;
-        player.applyPhysics(gravity);
         player.checkCollision(platforms);
 
         sf::Vector2f pos = player.getPosition();
@@ -163,6 +163,7 @@ int main()
         {
             player.setPosition(-playerWidth, pos.y);
         }
+        
         // Update all platforms
         for (auto &plat : platforms)
             plat->update(deltaTime);
@@ -172,7 +173,7 @@ int main()
             decoration->update(deltaTime); 
 
 
-        // sf::Color bgColor = (currentRealm == Realm::Light) ? sf::Color(200, 220, 255) : sf::Color(30, 30, 50);
+        
         window.clear();
         window.draw(currentRealm == Realm::Light ? backgroundSprite2 : backgroundSprite4);
         window.draw(currentRealm == Realm::Light ? backgroundSprite1 : backgroundSprite3);
