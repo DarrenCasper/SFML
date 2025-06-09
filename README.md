@@ -36,3 +36,10 @@ Apa yang ditambahkan:
 1. Membuat Sprite buat player
 2. Rencana mau kasih sprite buat objek tapi cukup susah karena image yang dipake di stretch semua sehingga mungkin tetap menggunakan platform berwarna rectangle
 3. Logic player sudah diupdate tetapi tidak menggunakan banyak animasi hanya animasi bergerak dan arah yang dihadap ketika dipencet A dan D.
+
+
+## Sixth Commit:
+Apa yang ditambahkan:
+1. Membuat texture untuk platform yang berubah bedasarkan platform tersebut
+2. Platform yang awalnya cumang rectangle diubah jadi texture pixel (walaupun scale agak berantakan)
+3. Rencana Tinggal membuat game state dan beberapa objek agar bisa menyelesaikan level 1 (main per level)

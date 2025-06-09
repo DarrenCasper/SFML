@@ -8,7 +8,7 @@ Player::Player()
     texture.loadFromFile("img/AnimationSheet_Character.png");
     sprite.setTexture(texture);
     sprite.setTextureRect(sf::IntRect(0, 0, frameWidth, frameHeight));
-    sprite.setPosition(100.f, 700.f);
+    sprite.setPosition(100.f, 500.f);
     sprite.setOrigin(frameWidth / 2.f, 0);
     sprite.setScale(1.7f, 1.7f);
 }

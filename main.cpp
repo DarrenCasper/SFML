@@ -109,27 +109,29 @@ int main()
     Realm currentRealm = Realm::Light;
 
     sf::RectangleShape platform1(sf::Vector2f(200.f, 20.f));
-    platform1.setFillColor(sf::Color::Blue);
+    platform1.setFillColor(sf::Color::White);
     platform1.setPosition(300.f, 700.f);
     platforms.push_back(new Platform(platform1.getSize(), platform1.getPosition(), platform1.getFillColor()));
 
     sf::RectangleShape platform2(sf::Vector2f(200.f, 20.f));
-    platform2.setFillColor(sf::Color::Red);
+    platform2.setFillColor(sf::Color::White);
     platform2.setPosition(720.f, 620.f);
     platforms.push_back(new DisappearPlatform(platform2.getSize(), platform2.getPosition(), platform2.getFillColor(), 2.f, 3.f));
 
     sf::RectangleShape ground(sf::Vector2f(3000.f, 50.f));
-    ground.setFillColor(sf::Color::Yellow);
+    ground.setFillColor(sf::Color::White);
     ground.setPosition(0.f, 850.f);
     platforms.push_back(new Platform(ground.getSize(), ground.getPosition(), ground.getFillColor()));
 
     sf::RectangleShape realmPlat(sf::Vector2f(200.f, 20.f));
+    realmPlat.setFillColor(sf::Color::White);
     realmPlat.setPosition(1000.f, 500.f);
-    platforms.push_back(new RealmPlatform(realmPlat.getSize(), realmPlat.getPosition(), Realm::Light));
+    platforms.push_back(new RealmPlatform(realmPlat.getSize(), realmPlat.getPosition(), realmPlat.getFillColor(), Realm::Light));
 
     sf::RectangleShape realmPlat1(sf::Vector2f(200.f, 20.f));
+    realmPlat1.setFillColor(sf::Color::White);
     realmPlat1.setPosition(1300.f, 500.f);
-    platforms.push_back(new RealmPlatform(realmPlat1.getSize(), realmPlat1.getPosition(), Realm::Dark));
+    platforms.push_back(new RealmPlatform(realmPlat1.getSize(), realmPlat1.getPosition(), realmPlat1.getFillColor(), Realm::Dark));
 
     while (window.isOpen())
     {
